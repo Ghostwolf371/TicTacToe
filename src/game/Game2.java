@@ -18,6 +18,7 @@ public class Game2 {
         outer: // Om de buitenste while-lus te markeren
         while (true) {
 
+            // Toon de opties voor de gebruiker: inloggen, registreren, top scores bekijken of het spel afsluiten
             System.out.println("Hallo en welkom bij het spel! Heeft u al een account?");
             System.out.println("1. Ja, ik heb al een account");
             System.out.println("2. Nee, ik heb nog geen account");
@@ -45,7 +46,7 @@ public class Game2 {
                     break outer;
 
                 default:
-                    System.out.println("Ongeldige invoer. Probeer opnieuw met 'ja' of 'nee'.");
+                    System.out.println("Ongeldige invoer. Probeer opnieuw met '1','2','3' of '4'.");
                     // Als de gebruiker een ongeldige keuze maakt, wordt een foutmelding getoond.
 
             }

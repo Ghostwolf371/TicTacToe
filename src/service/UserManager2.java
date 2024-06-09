@@ -185,34 +185,35 @@ public class UserManager2 {
 
     //Methode om de score op te slaan
     public void saveScore(int score, String username) {
-        // Establish database connection
+        // Maak verbinding met de database
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
-            // Prepare to execute SQL commands
+
+            // Bereid SQL-statements voor om uit te voeren
             Statement stmt = conn.createStatement();
 
-            // Check if a score already exists for the given ID
+            // Controleer of er al een score bestaat voor het gegeven ID
             String checkIfExistsQuery = "SELECT COUNT(*) AS count FROM scores WHERE score_id =?";
             PreparedStatement checkIfExistsPstmt = conn.prepareStatement(checkIfExistsQuery);
             checkIfExistsPstmt.setInt(1, id);
             ResultSet rs = checkIfExistsPstmt.executeQuery();
 
             if (rs.next() && rs.getInt("count") > 0) {
-                // Score exists, update it
+                // Score bestaat al, update deze
                 String updateQuery = "UPDATE scores SET score = score +? WHERE score_id =?";
                 PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
                 updatePstmt.setInt(1, score);
                 updatePstmt.setInt(2, id);
                 int rowsUpdated = updatePstmt.executeUpdate();
                 if (rowsUpdated > 0) {
-                    System.out.println("Score updated successfully.");
+                    System.out.println("Score succesvol bijgewerkt.");  // Geef een melding als de score succesvol is bijgewerkt
                 } else {
-                    System.out.println("No record found with the given ID.");
+                    System.out.println("Geen record gevonden met het opgegeven ID.");  // Geef een melding als er geen record is gevonden met het opgegeven ID
                 }
             } else {
-                // No existing score, insert a new one
+                // Indien geen bestaande score, voeg een nieuwe toe
                 String insertQuery = "INSERT INTO scores (score_id, score, player) VALUES (?,?,?)";
                 PreparedStatement insertPstmt = conn.prepareStatement(insertQuery);
                 insertPstmt.setInt(1, id);
@@ -220,23 +221,23 @@ public class UserManager2 {
                 insertPstmt.setString(3, username);
                 int rowsInserted = insertPstmt.executeUpdate();
                 if (rowsInserted > 0) {
-                    System.out.println("New score inserted successfully.");
+                    System.out.println("Nieuwe score succesvol toegevoegd.");  // Geef een melding als de nieuwe score succesvol is toegevoegd
                 } else {
-                    System.out.println("Failed to insert new score.");
+                    System.out.println("Toevoegen van nieuwe score is mislukt.");  // Geef een melding als het toevoegen van de nieuwe score is mislukt
                 }
             }
 
         } catch (SQLException e) {
-            // Log or handle the exception appropriately
-            System.err.println("Error managing the score: " + e.getMessage());
+            // Log de foutmelding of handel deze op de juiste manier af
+            System.err.println("Fout bij het beheren van de score: " + e.getMessage());
             e.printStackTrace(); // Print the stack trace for further investigation
         } finally {
-            // Ensure the connection is closed to avoid resource leaks
+            // Zorg ervoor dat de verbinding wordt gesloten om resourcelekken te voorkomen
             if (conn!= null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    System.err.println("Error closing the database connection: " + e.getMessage());
+                    System.err.println("Fout bij het sluiten van de databaseverbinding: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
