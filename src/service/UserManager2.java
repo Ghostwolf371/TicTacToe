@@ -12,17 +12,17 @@ public class UserManager2 {
     private static final String PASSWORD = "";
 
 
-    private int id;
+    private int id; //Variabele om de gebruikers-id bij te houden
 
 
 
     // Methode om een nieuwe gebruiker te registreren
     public PlayerData2 register(String username, int code, String dateOfBirth) {
-        //Controleer als de gebruikersnaam al in gebruik is
 
+        //Controleer als de gebruikersnaam al in gebruik is
         if (isUsernameTaken(username)){
             //Geef een melding als de gebruikersnaam al in gebruik is
-            System.out.println("Username is already taken. Please choose a different username.");
+            System.out.println("Gebruikersnaam is al in gebruik. Kies alstublieft een andere gebruikersnaam.");
             return null; //Retourneer null als de gebruikersnaam al in gebruik is
         }
 
@@ -44,7 +44,7 @@ public class UserManager2 {
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 //Als er geen rijen zijn beïnvloed, zet een SQLException
-                throw new SQLException("Creating user failed. Please try again.");
+                throw new SQLException("Gebruiker aanmaken mislukt. Probeer het opnieuw.");
             }
 
 
@@ -60,7 +60,7 @@ public class UserManager2 {
 
                 else {
                     //Als er geen sleutels zijn gegenereerd, zet een SQLException
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new SQLException("Gebruiker aanmaken mislukt, geen ID verkregen.");
                 }
             }
         }
@@ -145,43 +145,53 @@ public class UserManager2 {
 
         return false;  //Retourneer false als er een fout optreedt of geen rijen zijn gevonden
     }
+
+    // Methode om de top scores op te halen
     public void getTopScores() {
-        // Connect to database
+
+        // Maak connectie met de database
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            // Gettop scores query
+
             String query = "SELECT u.username, MAX(s.score) AS score\n" +
                     "FROM scores s\n" +
                     "JOIN players u ON s.user_id = u.player_id\n" +
                     "GROUP BY u.username\n" +
                     "ORDER BY score DESC\n" +
-                    "LIMIT 10";
+                    "LIMIT 10"; //Query om de top scores op te halen
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             System.out.println("Top 10 scores:");
             while (rs.next()) {
+                //Toon de gebruikersnaam en bijbehorende score
                 System.out.println(rs.getString("username") + ": " + rs.getInt("score"));
             }
         } catch (SQLException e) {
-            System.out.println("Error getting top scores: " + e.getMessage());
+            // Vang eventuele SQL-fouten op en geef een foutmelding
+            System.out.println("Fout bij het ophalen van de top scores: " + e.getMessage());
         } finally {
+            // Sluit de databaseverbinding om resourcelekken te voorkomen
             if (conn!= null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error closing database connection: " + e.getMessage());
+                    System.out.println("Fout bij het sluiten van de database verbinding: " + e.getMessage());
                 }
             }
         }
 
     }
+
+    //Methode om de score op te slaan
     public void saveScore(int score,String username) {
-        // Connect to database
+
+        // Maak connectie met de database
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            // Save score query
+
+            // Query om de score op te slaan
             String query = "INSERT INTO scores (user_id, score,player) VALUES (?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
@@ -189,13 +199,15 @@ public class UserManager2 {
             pstmt.setString(3, username);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error saving score: " + e.getMessage());
+            // Vang eventuele SQL-fouten op en geef een foutmelding
+            System.out.println("Fout bij het opslaan van de score: " + e.getMessage());
         } finally {
+            // Sluit de databaseverbinding om resourcelekken te voorkomen
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    System.out.println("Error closing database connection: " + e.getMessage());
+                    System.out.println("Fout bij het sluiten van de database verbinding: " + e.getMessage());
                 }
             }
         }

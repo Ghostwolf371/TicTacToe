@@ -12,18 +12,18 @@ public class Game2 {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-        UserManager2 userManager = new UserManager2();
+        Scanner scanner = new Scanner(System.in); // Creëer een Scanner object om gebruikersinvoer te lezen
+        UserManager2 userManager = new UserManager2(); // Creëer een UserManager2 object om gebruikers te beheren
 
-        outer:
+        outer: // Om de buitenste while-lus te markeren
         while (true) {
 
-            System.out.println("Hello and welcome to the game! Do you already have an account?");
-            System.out.println("1. Yes i do have a account");
-            System.out.println("2. No i don't have a account");
-            System.out.println("3. Get the top scores");
+            System.out.println("Hallo en welkom bij het spel! Heeft u al een account?");
+            System.out.println("1. Ja, ik heb al een account");
+            System.out.println("2. Nee, ik heb nog geen account");
+            System.out.println("3. Bekijk de top scores");
             System.out.println("4. Exit");
-            System.out.print("Enter choice: ");
+            System.out.print("Maak een keuze: ");
             int response = scanner.nextInt();
             scanner.nextLine();
 
@@ -31,21 +31,22 @@ public class Game2 {
 
             switch (response){
                 case 1:
-                    Login2.login();
-                    break outer;
+                    Login2.login(); // Als de gebruiker aangeeft dat hij al een account heeft, wordt de login-methode aangeroepen uit de Login klasse.
+                    break outer; //Na succesvol inloggen, verlaat de buitenste while-lus om het spel te starten.
                 case 2:
-                    SignUp2.signUp();
+                    SignUp2.signUp(); // Als de gebruiker aangeeft dat hij nog geen account heeft, wordt de signUp-methode aangeroepen uit de SignUp klasse.
                     break;
                 case 3:
-                    userManager.getTopScores();
+                    userManager.getTopScores(); // Als de gebruiker ervoor kiest om de top scores te bekijken, wordt de getTopScores-methode aangeroepen uit de UserManager klasse.
                     break;
 
                 case 4:
-                    System.out.println("Goodbye!");
+                    System.out.println("Tot ziens!"); // Als de gebruiker kiest om het programma te verlaten, wordt er een afscheidsgroet getoond.
                     break;
 
                 default:
-                    System.out.println("Invalid input. Please try again with 'yes' or 'no'.");
+                    System.out.println("Ongeldige invoer. Probeer opnieuw met 'ja' of 'nee'.");
+                    // Als de gebruiker een ongeldige keuze maakt, wordt een foutmelding getoond.
 
             }
 
