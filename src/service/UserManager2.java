@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public class UserManager2 {
     //Database verbindingsinformatie
-    private static final String URL = "jdbc:mysql://localhost:3306/tictactac";
+    private static final String URL = "jdbc:mysql://localhost:3307/tictactoe";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "root";
 
 
     private int id; //Variabele om de gebruikers-id bij te houden
@@ -156,7 +156,7 @@ public class UserManager2 {
 
             String query = "SELECT u.username, MAX(s.score) AS score\n" +
                     "FROM scores s\n" +
-                    "JOIN players u ON s.user_id = u.player_id\n" +
+                    "JOIN players u ON s.score_id = u.player_id\n" +
                     "GROUP BY u.username\n" +
                     "ORDER BY score DESC\n" +
                     "LIMIT 10"; //Query om de top scores op te halen
@@ -192,7 +192,7 @@ public class UserManager2 {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
             // Query om de score op te slaan
-            String query = "INSERT INTO scores (user_id, score,player) VALUES (?, ?, ?)";
+            String query = "INSERT INTO scores (score_id, score,player) VALUES (?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, id);
             pstmt.setInt(2, score);

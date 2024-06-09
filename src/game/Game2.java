@@ -42,7 +42,7 @@ public class Game2 {
 
                 case 4:
                     System.out.println("Tot ziens!"); // Als de gebruiker kiest om het programma te verlaten, wordt er een afscheidsgroet getoond.
-                    break;
+                    break outer;
 
                 default:
                     System.out.println("Ongeldige invoer. Probeer opnieuw met 'ja' of 'nee'.");

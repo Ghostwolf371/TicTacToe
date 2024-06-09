@@ -46,7 +46,6 @@ public class Login2 {
                     System.out.println("\nGefeliciteerd, " + (GameLogic2.player1_turn ? "Speler 1 ("+GameLogic2.ANSI_BLUE+"X"+ GameLogic2.ANSI_RESET+")" : "Speler 2 ("+GameLogic2.ANSI_RED+"O"+ GameLogic2.ANSI_RESET+")") + " wint!");
 
                     //Update de gebruikersnaam met de winnende speler
-                    username = (GameLogic2.player1_turn ? "Speler 1 ("+GameLogic2.ANSI_BLUE+"X"+ GameLogic2.ANSI_RESET+")" : "Speler 2 ("+GameLogic2.ANSI_RED+"O"+ GameLogic2.ANSI_RESET+")");
 
                     //Vraag of de gebruiker nog een spel wil spelen
                     System.out.println("\nWilt u nog een spel spelen? (ja/nee)");
