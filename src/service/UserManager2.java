@@ -184,32 +184,63 @@ public class UserManager2 {
     }
 
     //Methode om de score op te slaan
-    public void saveScore(int score,String username) {
-
-        // Maak connectie met de database
+    public void saveScore(int score, String username) {
+        // Establish database connection
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
-            // Query om de score op te slaan
-            String query = "INSERT INTO scores (score_id, score,player) VALUES (?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, id);
-            pstmt.setInt(2, score);
-            pstmt.setString(3, username);
-            pstmt.executeUpdate();
+            // Prepare to execute SQL commands
+            Statement stmt = conn.createStatement();
+
+            // Check if a score already exists for the given ID
+            String checkIfExistsQuery = "SELECT COUNT(*) AS count FROM scores WHERE score_id =?";
+            PreparedStatement checkIfExistsPstmt = conn.prepareStatement(checkIfExistsQuery);
+            checkIfExistsPstmt.setInt(1, id);
+            ResultSet rs = checkIfExistsPstmt.executeQuery();
+
+            if (rs.next() && rs.getInt("count") > 0) {
+                // Score exists, update it
+                String updateQuery = "UPDATE scores SET score = score +? WHERE score_id =?";
+                PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
+                updatePstmt.setInt(1, score);
+                updatePstmt.setInt(2, id);
+                int rowsUpdated = updatePstmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    System.out.println("Score updated successfully.");
+                } else {
+                    System.out.println("No record found with the given ID.");
+                }
+            } else {
+                // No existing score, insert a new one
+                String insertQuery = "INSERT INTO scores (score_id, score, player) VALUES (?,?,?)";
+                PreparedStatement insertPstmt = conn.prepareStatement(insertQuery);
+                insertPstmt.setInt(1, id);
+                insertPstmt.setInt(2, score);
+                insertPstmt.setString(3, username);
+                int rowsInserted = insertPstmt.executeUpdate();
+                if (rowsInserted > 0) {
+                    System.out.println("New score inserted successfully.");
+                } else {
+                    System.out.println("Failed to insert new score.");
+                }
+            }
+
         } catch (SQLException e) {
-            // Vang eventuele SQL-fouten op en geef een foutmelding
-            System.out.println("Fout bij het opslaan van de score: " + e.getMessage());
+            // Log or handle the exception appropriately
+            System.err.println("Error managing the score: " + e.getMessage());
+            e.printStackTrace(); // Print the stack trace for further investigation
         } finally {
-            // Sluit de databaseverbinding om resourcelekken te voorkomen
-            if (conn != null) {
+            // Ensure the connection is closed to avoid resource leaks
+            if (conn!= null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    System.out.println("Fout bij het sluiten van de database verbinding: " + e.getMessage());
+                    System.err.println("Error closing the database connection: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
     }
+
 }
