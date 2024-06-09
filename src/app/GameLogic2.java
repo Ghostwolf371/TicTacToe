@@ -4,13 +4,15 @@ import java.util.Scanner;
 
 public class GameLogic2 {
 
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE = "\u001B[34m"; // Kleurcode voor blauw
+    public static final String ANSI_RED = "\u001B[31m";  // Kleurcode voor rood
+    public static final String ANSI_RESET = "\u001B[0m"; // Reset de kleur naar standaard
+
+    // Geeft aan wiens beurt het is, true voor player 1 false voor player 2
     static boolean player1_turn = true;
-    public static String X = ANSI_BLUE + "X" + ANSI_RESET;
-    public static String O = ANSI_RED + "O" + ANSI_RESET;
-    // Om aan te geven wiens beurt het is, true voor player 1 false voor player 2
+    public static String X = ANSI_BLUE + "X" + ANSI_RESET; // Player X is blauw
+    public static String O = ANSI_RED + "O" + ANSI_RESET;  // Player O is rood
+
 
     static String[][] board = {
             // Het 3x3 rooster dat het tic tac toe board voorstelt
@@ -27,7 +29,7 @@ public class GameLogic2 {
         System.out.println(board[2][0] + "|" + board[2][1] + "|" + board[2][2]);
     }
     public static void playerMove(Scanner scanner) {
-        // De zet van de speler verwerkt
+        // Verwerkt de zet van de speler
         int pos;
         while (true) {
             if (player1_turn) {
@@ -36,7 +38,7 @@ public class GameLogic2 {
                 System.out.println("Player 2 ("+GameLogic2.ANSI_RED+"O"+ GameLogic2.ANSI_RESET+") Enter your move (1-9) ");
             }
             pos = scanner.nextInt();
-            if (isValidMove(pos)) { // Controleren of de zet geldig is
+            if (isValidMove(pos)) { // Controleert of de zet geldig is
                 placeMove(pos); // De zet op het bord plaatsen
                 break;
             } else {
@@ -45,7 +47,7 @@ public class GameLogic2 {
         }
     }
     public static boolean isValidMove(int pos) {
-        // Controleren of de zet geldig is
+        // Controleert of de zet geldig is
         return switch (pos) {
             case 1 -> board[0][0] == " ";
             case 2 -> board[0][1] == " ";
@@ -61,12 +63,10 @@ public class GameLogic2 {
     }
     public static void placeMove(int pos) {
         // De zet van de speler op het bord plaatsen
+        String symbol = player1_turn ? X : O; //  Het symbool bepalen op basis van wiens beurt het is
 
 
-        String symbol = player1_turn ? X : O; //  Het symbool bepalen op basis van de beurt van de speler
-
-
-        switch (pos) {
+        switch (pos) {  //Plaats het symbool op de juiste positie op het bord
             case 1:
                 board[0][0] = symbol;
                 break;
@@ -100,9 +100,10 @@ public class GameLogic2 {
 
     }
     public static void printBoardWithColor(String colorCode) {
-        System.out.print(colorCode); // Apply the color code to the output
-        printBoard(); // Call the existing printBoard method to print the board
-        System.out.print("\033[0m"); // Reset the color back to default
+        //Print het bord met een specifieke kleur
+        System.out.print(colorCode); // Toepassen van de kleurcode op de invoer
+        printBoard(); //Roep de bestaande printboard-method aan om het bord uit te printen
+        System.out.print("\033[0m"); // Reset de kleur naar standaard
     }
     static boolean checkWin() {
         // Controleren of er een winnende voorwaarde is
@@ -140,7 +141,7 @@ public class GameLogic2 {
         return false;
     }
     static boolean checkTie() {
-        // CControleren of het spel gelijkspel is
+        // Controleert of het spel gelijkspel is
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == " ") {
