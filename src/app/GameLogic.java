@@ -2,7 +2,7 @@ package app;
 
 import java.util.Scanner;
 
-public class GameLogic2 {
+public class GameLogic {
 
     public static final String ANSI_BLUE = "\u001B[34m"; // Kleurcode voor blauw
     public static final String ANSI_RED = "\u001B[31m";  // Kleurcode voor rood
@@ -35,7 +35,7 @@ public class GameLogic2 {
             if (player1_turn) {
                 System.out.println("Player 1 ("+ANSI_BLUE+"X"+ANSI_RESET+") Enter your move (1-9) ");
             } else {
-                System.out.println("Player 2 ("+GameLogic2.ANSI_RED+"O"+ GameLogic2.ANSI_RESET+") Enter your move (1-9) ");
+                System.out.println("Player 2 ("+ GameLogic.ANSI_RED+"O"+ GameLogic.ANSI_RESET+") Enter your move (1-9) ");
             }
             pos = scanner.nextInt();
             if (isValidMove(pos)) { // Controleert of de zet geldig is
@@ -119,7 +119,7 @@ public class GameLogic2 {
                         (board[0][0] == X && board[1][1] == X && board[2][2] == X) ||
                         (board[0][2] == X && board[1][1] == X && board[2][0] == X)
         ) {
-            System.out.println("Player 1 ("+GameLogic2.ANSI_BLUE+"X"+ GameLogic2.ANSI_RESET+") wins!");
+            System.out.println("Player 1 ("+ GameLogic.ANSI_BLUE+"X"+ GameLogic.ANSI_RESET+") wins!");
             return true;
         }
 
@@ -134,7 +134,7 @@ public class GameLogic2 {
                         (board[0][0] == O && board[1][1] == O && board[2][2] == O) ||
                         (board[0][2] == O && board[1][1] == O && board[2][0] == O)
         ) {
-            System.out.println("Player 2 ("+GameLogic2.ANSI_RED+"O"+ GameLogic2.ANSI_RESET+") wins!");
+            System.out.println("Player 2 ("+ GameLogic.ANSI_RED+"O"+ GameLogic.ANSI_RESET+") wins!");
             return true;
         }
 

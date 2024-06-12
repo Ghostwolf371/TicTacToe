@@ -1,16 +1,16 @@
 package app;
 
-import model.PlayerData2;
-import service.UserManager2;
+import model.PlayerData;
+import service.UserManager;
 
 import java.util.Scanner;
 
-public class SignUp2 {
+public class SignUp {
 
     public static void signUp(){
 
         Scanner scanner = new Scanner(System.in); //Creëer een scanner om gebruikersinput te lezen
-        UserManager2 userManager = new UserManager2(); //Creëer een UserManager object om gebruikers te beheren
+        UserManager userManager = new UserManager(); //Creëer een UserManager object om gebruikers te beheren
         System.out.println("Okay, geen probleem. Laten we een account aanmaken!");
 
 
@@ -36,7 +36,7 @@ public class SignUp2 {
             System.out.println("Voer uw geboortedatum in (YYYY-MM-DD): ");
             String dateOfBirth = scanner.nextLine();
 
-            PlayerData2 newUser = userManager.register(username, code, dateOfBirth);
+            PlayerData newUser = userManager.register(username, code, dateOfBirth);
             if (newUser != null) {
                 //Als de registratie succesvol is, toon een melding
                 System.out.println("Gebruiker succesvol geregistreerd: " + newUser.getUsername());
