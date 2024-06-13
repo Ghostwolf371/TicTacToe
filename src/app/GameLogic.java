@@ -99,12 +99,7 @@ public class GameLogic {
         }
 
     }
-    public static void printBoardWithColor(String colorCode) {
-        //Print het bord met een specifieke kleur
-        System.out.print(colorCode); // Toepassen van de kleurcode op de invoer
-        printBoard(); //Roep de bestaande printboard-method aan om het bord uit te printen
-        System.out.print("\033[0m"); // Reset de kleur naar standaard
-    }
+
     static boolean checkWin() {
         // Controleren of er een winnende voorwaarde is
 

@@ -184,7 +184,7 @@ public class UserManager {
     }
 
     //Methode om de score op te slaan
-    public void saveScore(int score, String username) {
+    public void saveScore(int score) {
         // Maak verbinding met de database
         Connection conn = null;
         try {
@@ -214,11 +214,10 @@ public class UserManager {
                 }
             } else {
                 // Indien geen bestaande score, voeg een nieuwe toe
-                String insertQuery = "INSERT INTO scores (score_id, score, player) VALUES (?,?,?)";
+                String insertQuery = "INSERT INTO scores (score_id, score) VALUES (?,?)";
                 PreparedStatement insertPstmt = conn.prepareStatement(insertQuery);
                 insertPstmt.setInt(1, id);
                 insertPstmt.setInt(2, score);
-                insertPstmt.setString(3, username);
                 int rowsInserted = insertPstmt.executeUpdate();
                 if (rowsInserted > 0) {
                     System.out.println("Nieuwe score succesvol toegevoegd.");  // Geef een melding als de nieuwe score succesvol is toegevoegd

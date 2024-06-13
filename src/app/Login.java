@@ -53,7 +53,7 @@ public class Login {
 
                     //Controleer of de gebruiker wil doorgaan met een nieuw spel
                     if (!playAgainResponse.equalsIgnoreCase("ja")) {
-                        userManager.saveScore(score, username); // Sla de score op in de database
+                        userManager.saveScore(score); // Sla de score op in de database
                         System.out.println("Bedankt voor het spelen. Tot ziens.");
                         break; // Stop de spelloop
                     } else {

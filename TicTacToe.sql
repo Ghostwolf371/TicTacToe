@@ -1,9 +1,10 @@
 CREATE DATABASE tictactoe;
 USE tictactoe;
 
+
 CREATE TABLE players (
-  player_id int NOT NULL AUTO_INCREMENT UNIQUE,
-  username varchar(200) PRIMARY KEY,
+  player_id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  username varchar(200) NOT NULL UNIQUE,
   code int NOT NULL,
   Date_of_Birth date NOT NULL
 );
@@ -11,6 +12,5 @@ CREATE TABLE players (
 CREATE TABLE scores (
   score_id int NOT NULL PRIMARY KEY,
   score int NOT NULL,
-  player varchar(200) NOT NULL,
-  FOREIGN KEY (player) REFERENCES players(username)
+  FOREIGN KEY (score_id) REFERENCES players(player_id)
 );
